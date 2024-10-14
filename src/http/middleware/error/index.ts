@@ -7,6 +7,7 @@ export const notFound = (req: Request, res: Response, next: NextFunction) => {
     message: "Resource Not Found",
     status: StatusCodes.notFound,
     type: "Invalid path or url",
+    description:req.path
   });
 };
 

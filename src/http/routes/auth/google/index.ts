@@ -1,30 +1,32 @@
 import express from "express";
 import passport from "passport";
-import { googleAuth } from "../../../../config/auth/googleoauth2";
+import { GoogleStrategy } from "../../../../config/auth/googleoauth2";
+import { IUser } from "../../../../data/entities/user";
+passport.use(GoogleStrategy);
+passport.serializeUser(function (user, done) {
+  done(null, user as Express.User); // Use the unique identifier
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user as IUser);
+});
+
 const router = express.Router();
-passport.use(googleAuth);
-router.get(
-  "/",
-  passport.authenticate(
-    "google",
-    {
-      successRedirect: "apple.com",
-      successMessage: "Auth Success",
-    },
-    () => {
-      console.log("saksss;");
-    }
-  )
-);
+
+router.get("/", passport.authenticate("google"));
+router.get("/login", (req, res) => {
+  res.send("<h1>Login</h1>");
+});
+
+router.get("/home", (req, res) => {
+  res.send("<h1>Home</h1>");
+});
 
 router.get(
   "/callback",
   passport.authenticate("google", {
-    successReturnToOrRedirect: "/ayaba",
-    failureRedirect: "/jaj",
-    successMessage: "syhsyhsuysus",
-    successRedirect: "apple.com",
+    failureRedirect: "/api/v1/auth/google/login",
+    successRedirect: "/api/v1/auth/google/home",
   })
 );
-
 export default router;
