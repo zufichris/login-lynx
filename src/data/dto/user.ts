@@ -1,4 +1,3 @@
-export interface CreateUserDto {
-  firstName: string;
-  email: string;
-}
+import { IUser } from "../entities/user";
+
+export interface CreateUserDto extends IUser {}

@@ -3,8 +3,7 @@ import { AuthTypes, OAuthProviders } from "../enums/auth";
 
 export interface IUser {
   id?: ID;
-  firstName: string;
-  lastName?: string;
+  name: string;
   userName?: string;
   avatar?:string;
   email: string;

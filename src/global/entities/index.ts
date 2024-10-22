@@ -6,20 +6,25 @@ export interface IResponseData<TData> {
   message: string;
   description?: string;
   errors?: { [key: string]: any }[];
-  stack?:any,
+  stack?: any;
   redirect?: {
     path: string;
   };
-  type?:string;
+  type?: string;
   fieldsModified?: number;
   documentsModified?: number;
+  url?: string;
+  path?: string;
 }
 
-export interface IResponseDataPaginated extends IResponseData<unknown> {
+export interface IResponseDataPaginated<TData>{
+  data: TData[];
   page: number;
   limit: number;
   filterCount: number;
   totalCount?: number;
+  status: StatusCodes;
+  message: string;
 }
 
-export type ID=string|number
+export type ID = string | number;
