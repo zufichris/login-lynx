@@ -4,25 +4,31 @@ import { UserRepositoryImpl } from "../../data/orm/repository/UserRepositoryImpl
 import { IResponseData } from "../../global/entities";
 import { StatusCodes } from "../../global/enums";
 import { AppError } from "../../global/error";
-import { BaseUseCase } from "../../global/useCase";
+import { BaseUseCase } from "../../global/usecase";
 
 export class CreateUser
-  implements BaseUseCase<Partial<IUser>, IResponseData<IUser[]>>
+  implements BaseUseCase<Partial<IUser>, IResponseData<IUser>>
 {
   constructor(private readonly userRepositoryImpl: UserRepositoryImpl) {}
 
-  async execute(input: CreateUserDto): Promise<IResponseData<IUser[]>> {
+  async execute(input: CreateUserDto): Promise<IResponseData<IUser>> {
     try {
-      const newUsers = await this.userRepositoryImpl.create({
-        ...input,
-        userName: input.email.split("@")[0],
-      });
+      let newUser;
+      const exist = await this.userRepositoryImpl.findByEmail(input.email);
+
+      if (!exist) {
+        newUser = await this.userRepositoryImpl.create({
+          ...input,
+          userName: input.email.split("@")[0],
+        });
+      }
+
       return {
-        data: newUsers,
-        message: "User Created",
-        status: StatusCodes.created,
-        documentsModified: newUsers.length,
-        type: "create user",
+        data: exist ?? newUser,
+        message: newUser ? "User Created" : "User Exists",
+        status: newUser ? StatusCodes.created : StatusCodes.ok,
+        documentsModified: newUser ? 1 : 0,
+        type: newUser ? "create user" : "Existing User",
       };
     } catch (error: any) {
       throw new AppError(error);

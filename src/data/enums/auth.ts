@@ -1,5 +1,5 @@
 export enum AuthTypes {
-  OAuth = "OAuth",
+  OAuth = "OAuth2.0",
   EmailAndPassword = "EmailAndPassword",
 }
 

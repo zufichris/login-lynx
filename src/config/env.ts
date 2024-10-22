@@ -12,4 +12,5 @@ export const env = {
   google_callback_url:parsed!.GOOGLE_CALLBACK_URL,
   google_client_id:parsed!.GOOGLE_CLIENT_ID,
   google_client_secret:parsed!.GOOGLE_CLIENT_SECRET,
+  jwt_secret:parsed!.JWT_SECRET
 };
