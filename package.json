@@ -30,10 +30,12 @@
   "homepage": "https://github.com/zufichris/nodejs-typescript-template#readme",
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.7",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mongoose": "^5.11.96",
     "@types/passport-google-oauth2": "^0.1.10",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",

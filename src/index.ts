@@ -1,9 +1,11 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import router from "./http/routes/route_v1";
 import { Start } from "./http/server/httpServer";
 import { errorHandler, notFound } from "./http/middleware/error";
 import { StatusCodes } from "./global/enums";
-import { Auth } from "./http/middleware/auth";
+import { IUser } from "./data/entities/user";
+import { authControllers } from "./http/controllers/auth";
 
 const app = express();
 app.use(express.json({}));
@@ -12,9 +14,9 @@ app.use(
     extended: true,
   })
 );
-app.get("/", (req, res) => {
-  const token = req.get("cookie")?.split("=")[1];
-  const user = token ? JSON.parse(Auth.decodeJWT(token)) : null;
+app.use(cookieParser());
+app.get("/", async (req, res) => {
+  const user = await authControllers.verifyToken(req);
   res.status(StatusCodes.ok).send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -78,7 +80,7 @@ app.get("/", (req, res) => {
             ${
               user
                 ? `<div>
-                  <img src="${user.avatar}"/>
+                  <img src="${user?.avatar}"/>
                 <h3>You Are Live ${user.name}</h3>
                    <a href="/api/v1/users" class="btn">View All users</a>
                 <div>`

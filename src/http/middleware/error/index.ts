@@ -3,13 +3,15 @@ import { AppError } from "../../../global/error";
 import { StatusCodes } from "../../../global/enums";
 
 export const notFound = (req: Request, res: Response, next: NextFunction) => {
-  throw new AppError({
-    message: "Resource Not Found",
-    status: StatusCodes.notFound,
-    type: "Invalid path or url",
-    url: req.url,
-    path: req.path,
-  });
+  next(
+    new AppError({
+      message: "Resource Not Found",
+      status: StatusCodes.notFound,
+      type: "Invalid path or url",
+      url: req.url,
+      path: req.path,
+    })
+  );
 };
 
 export const errorHandler = (
@@ -24,8 +26,8 @@ export const errorHandler = (
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Login-Lynx - ${err.error.status} - ${
-    err.error.message
+            <title>Login-Lynx - ${err?.error?.status} - ${
+    err?.error?.message
   }</title>
             <style>
                 body {
@@ -49,14 +51,16 @@ export const errorHandler = (
                     height: 95%;
                 }
                 h1 {
-                    color: ${err.error.status! >= 500 ? "#e74c3c" : "#f39c12"};
+                    color: ${
+                      err?.error?.status! >= 500 ? "#e74c3c" : "#f39c12"
+                    };
                 }
                 .error-details {
                     margin-top: 20px;
                     background-color: #f8d7da;
                     padding: 15px;
                     border-left: 4px solid ${
-                      err.error.status! >= 500 ? "#e74c3c" : "#f39c12"
+                      err?.error?.status! >= 500 ? "#e74c3c" : "#f39c12"
                     };
                     white-space: pre-wrap;
                     word-wrap: break-word;
@@ -77,17 +81,17 @@ export const errorHandler = (
         </head>
         <body>
             <div class="container">
-                <h1>Error ${err.error.status}: ${err.error.message}</h1>
-                <p><strong>Type:</strong> ${err.error.type}</p>
-                <p><strong>Path:</strong> ${err.error.path}</p>
-                <p><strong>URL:</strong> ${err.error.url}</p>
-                <p><strong>Description:</strong> ${err.error.description}</p>
+                <h1>Error ${err?.error?.status}: ${err?.error?.message}</h1>
+                <p><strong>Type:</strong> ${err?.error?.type}</p>
+                <p><strong>Path:</strong> ${err?.error?.path}</p>
+                <p><strong>URL:</strong> ${err?.error?.url}</p>
+                <p><strong>Description:</strong> ${err?.error?.description}</p>
                 ${
-                  err.error.stack
+                  err?.error?.stack
                     ? `
                 <div class="error-details">
                     <h3>Stack Trace:</h3>
-                    <p>${err.error.stack}</p>
+                    <p>${err?.error?.stack}</p>
                 </div>`
                     : ""
                 }

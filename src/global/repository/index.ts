@@ -4,7 +4,7 @@ import { IUser } from "../../data/entities/user";
 
 export interface IBaseRepository<TData> {
   create?(data: TData): Promise<TData>;
-  update?(data: Partial<TData> | TData[]): Promise<TData[]>;
+  update?(id:ID,data: Partial<TData> ): Promise<TData>;
   delete?(id: ID): Promise<boolean>;
   findById?(id: ID): Promise<TData>;
   query?(

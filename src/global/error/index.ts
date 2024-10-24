@@ -15,6 +15,7 @@ export class AppError extends Error {
     }-Reference:${!env?.in_prod ? errorFilePath ?? this.stack : ""}`;
 
     this.error.stack = env?.in_prod ? undefined : this.stack;
+    Error.stackTraceLimit = 2;
     Error.captureStackTrace(this, this.constructor);
   }
 

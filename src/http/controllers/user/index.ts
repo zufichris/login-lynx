@@ -39,9 +39,7 @@ class Controllers {
       if (error.error.errors?.length) throw error;
 
       const result = await this.createUserUseCase.execute(userData);
-      res
-        .status(result.status)
-        .redirect("/api/v1/users");
+      res.status(result.status).redirect("/api/v1/users");
     } catch (err: any) {
       const error: IResponseData<null> = {
         message: "Error Creating User",

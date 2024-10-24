@@ -28,7 +28,7 @@ export class QueryUsers
       const totalCount = await this.userRepositoryImpl.count(query);
 
       return {
-        data: toArray<IUser>(users),
+        data: toArray<Omit<IUser, "password">>(users),
         filterCount,
         totalCount,
         limit,

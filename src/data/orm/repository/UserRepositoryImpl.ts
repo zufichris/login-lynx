@@ -90,4 +90,16 @@ export class UserRepositoryImpl implements IBaseRepository<IUser> {
       throw error;
     }
   }
+async update(id:ID,data: Partial<IUser> | IUser[]): Promise<IUser> {
+    try {
+      const updated=await this.model.findByIdAndUpdate(id,data,
+        {
+          new:true
+        }
+      )
+      return updated
+    } catch (error) {
+      throw error
+    }
+  }
 }
