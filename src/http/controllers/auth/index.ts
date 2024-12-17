@@ -34,15 +34,7 @@ export class AuthControllers {
     try {
       const { email, name, password } = req.body;
       //FIXME Validation
-      if (
-        [
-          !email,
-          !email.includes("@"),
-          !name,
-          !password,
-          !(password?.length >= 6),
-        ].includes(true)
-      )
+      if ([!email, !email.includes("@"), !name, !password].includes(true))
         throw Error("Invalid Data");
 
       const login = await this.authUseCase.register({
