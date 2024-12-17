@@ -70,6 +70,9 @@ app.get("/", async (req, res) => {
                 width:80px;
                 border-radius:50%;
                 }
+                .logout{
+                background-color: red;
+                }
         </style>
     </head>
     <body>
@@ -83,8 +86,10 @@ app.get("/", async (req, res) => {
                   <img src="${user?.avatar}"/>
                 <h3>You Are Live ${user.name}</h3>
                    <a href="/api/v1/users" class="btn">View All users</a>
+                    <a href="/api/v1/auth/logout" class="btn logout">Logout</a>
                 <div>`
-                : ` <a href="/api/v1/auth/google" class="btn">Continue With Google</a>`
+                : ` <a href="/api/v1/auth/" class="btn">Continue With Password</a>
+                <a href="/api/v1/auth/google" class="btn">Continue With Google</a>`
             }
         </div>
     </body>
